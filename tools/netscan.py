@@ -159,7 +159,7 @@ def _targetPortScan(target_ip, target_ports, method):
 
 
 def softScan(target_subnet):
-    '''A function to scan a subnet.
+    '''A function to scan IP of a subnet via ARP.
     This scan only detects IP and MAC addresses within a subnet.
 
     Params:
