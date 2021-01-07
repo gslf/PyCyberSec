@@ -16,7 +16,7 @@ def netscan():
         print("")
         print("PCS NetScan Menu")
         print("")
-        print("1 > Scan STANDARD")
+        print("1 > Scan IP address - SoftScan")
         print("0 > Back to MainMenu")
         print("")
         print("######################")
@@ -26,7 +26,9 @@ def netscan():
 
         # Launch PCS netscan
         if choice == "1":
-            standardScan()
+            target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
+            softScan(target)
+            input("Press any key to continue . . .")
 
         # Exit
         elif choice == "0":
@@ -170,13 +172,6 @@ def softScan(target_subnet):
     for item in scan_result:
         print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
 
-def standardScan():
-    # TODO
-    # Read target subnet
-    # Scan IP
-    # Scan standard PORTS
-    # Print scan result
-    pass
 
 def advancedScan():
     # TODO
