@@ -1,4 +1,4 @@
-Port # ;Name;Comment
+Port;Name;Comment
 1;tcpmux;TCP port service multiplexer
 5;rje;Remote Job Entry
 7;echo;Echo service

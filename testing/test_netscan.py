@@ -8,7 +8,7 @@ def test_netscan():
     target_subnet = "192.168.1.0/24"
     target_ports = [80,22]
 
-    '''
+
     print(">>>>>>>")
     print ("Test internal function _targetIPScan")
     result = _targetIPScan(target_subnet)
@@ -32,12 +32,13 @@ def test_netscan():
     result = _targetPortScan(target_ip, target_ports, "xmas")
     print(result)
     input("Press any key to continue . . .")
-    '''
+    
     print(">>>>>>>")
     print("Test SoftScan")
     softScan(target_subnet)
     input("Press any key to continue . . .")
 
-
-    # TODO
-    print("TEST NETSCAN")
+    print(">>>>>>>")
+    print("Test AdvancedScan")
+    softScan(target_subnet)
+    input("Press any key to continue . . .")

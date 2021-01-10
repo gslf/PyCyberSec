@@ -1,7 +1,7 @@
 import time
 import scapy.all as scapy
 
-from utils import clear
+from utils import clear, standardPorts
 
 
 def netscan():
@@ -16,7 +16,8 @@ def netscan():
         print("")
         print("PCS NetScan Menu")
         print("")
-        print("1 > Scan IP address - SoftScan")
+        print("1 > SoftScan - Scan net address")
+        print("2 > AdavancedScan - address and common ports")
         print("0 > Back to MainMenu")
         print("")
         print("######################")
@@ -24,10 +25,16 @@ def netscan():
 
         choice = input("Your choice: ")
 
-        # Launch PCS netscan
+        # Launch PCS SoftSCan
         if choice == "1":
             target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
             softScan(target)
+            input("Press any key to continue . . .")
+        
+        # Launch PCS AdvancedScan
+        if choice == "2":
+            target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
+            advancedScan(target)
             input("Press any key to continue . . .")
 
         # Exit
@@ -59,6 +66,7 @@ def _targetIPScan(target_subnet):
 
     return result
 
+# TODO Add timeout as parameter
 def _targetPortScan(target_ip, target_ports, method):
     '''A function to scan ports of a target ip.
     Supported scan methods: "syn" - "udp" - "xmas".
@@ -125,8 +133,9 @@ def _targetPortScan(target_ip, target_ports, method):
                 else:
                     port_status = "unknown"
 
-        scanned_ports.append((target_port, port_status))
-        port_status = "unknown"
+            scanned_ports.append((target_port, port_status))
+            port_status = "unknown"
+
         return scanned_ports
 
     ########################################
@@ -151,6 +160,12 @@ def _targetPortScan(target_ip, target_ports, method):
             else:
                 port_status = "filtered"
 
+            scanned_ports.append((target_port, port_status))
+            port_status = "unknown"
+
+        return scanned_ports
+        
+
     ########################################
     # WRONG METHOD
     else:
@@ -172,17 +187,34 @@ def softScan(target_subnet):
     for item in scan_result:
         print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
 
+def advancedScan(target_subnet):
+    '''A function to scan IP of a subnet via ARP.
+    This scan detects IP, MAC addresses and common TCP port status within a subnet.
 
-def advancedScan():
-    # TODO
-    # Read target subnet
-    # Scan IP
-    # Scan all PORTS
-    # Print scan result
-    pass
+    Params:
+        target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+    '''
+
+    print(">> PCS AdvancedScan in progress . . .\n")
+    scan_result = _targetIPScan(target_subnet)
+    standard_ports_list = standardPorts()
+    
+    for item in scan_result:
+        print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
+
+        scanned_ports = _targetPortScan(item["IP"], standard_ports_list, "syn")
+
+        for port in scanned_ports:
+            if port[1] != "closed":
+                print("Port {} is {}".format(port[0], port[1]))
+
+        print("----")
+
+    print("END")
+
 
 def customScan():
-    # TODO
+    # TODO Func customScan
     # Read target subnet
     # Scan IP
     # Scan specific PORTS
@@ -190,7 +222,7 @@ def customScan():
     pass
 
 def standardScanStealth():
-    # TODO
+    # TODO Func stealthScan
     # Read target subnet
     # Scan IP
     # Scan standard PORTS in Stealth mode
@@ -198,7 +230,7 @@ def standardScanStealth():
     pass
 
 def advancedScanStealth():
-    # TODO
+    # TODO Func stealthFullScan
     # Read target subnet
     # Scan IP
     # Scan ALL PORTS in Stealth mode
