@@ -18,6 +18,7 @@ def netscan():
         print("")
         print("1 > SoftScan - Scan net address")
         print("2 > AdavancedScan - address and common ports")
+        print("3 > CustomScan - address and common ports")
         print("0 > Back to MainMenu")
         print("")
         print("######################")
@@ -32,9 +33,23 @@ def netscan():
             input("Press any key to continue . . .")
         
         # Launch PCS AdvancedScan
-        if choice == "2":
+        elif choice == "2":
             target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
             advancedScan(target)
+            input("Press any key to continue . . .")
+
+        # Launch PCS CustomScan
+        elif choice == "3":
+            try:
+                target = input("Target ip or subnet (\"xx.xx.xx.xx/yy\"): ")
+                ports_string = input("Target ports (\"22 80 443 ...\") : ")
+                ports = list(map(int,ports_string.split()))
+                method = input("Method (\"syn\" or \"udp\" or \"xmas\"): ")
+                timeout = input("Timeout of port scan (seconds): ")
+                customScan(target, ports, method, float(timeout))
+            except Exception as e:
+                print("SCAN ERROR: {}".format(e))
+            
             input("Press any key to continue . . .")
 
         # Exit
@@ -66,8 +81,8 @@ def _targetIPScan(target_subnet):
 
     return result
 
-# TODO Add timeout as parameter
-def _targetPortScan(target_ip, target_ports, method):
+
+def _targetPortScan(target_ip, target_ports, method, timeout=1):
     '''A function to scan ports of a target ip.
     Supported scan methods: "syn" - "udp" - "xmas".
     Supported TCP port status: "unknow", "mute", "open", "closed", "filtered TCP" , "filtered ICMP"
@@ -91,7 +106,7 @@ def _targetPortScan(target_ip, target_ports, method):
             src_port = scapy.RandShort()
             port_status = "mute"
 
-            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.TCP(sport= src_port, dport=target_port, flags="S"), verbose=False, timeout=5)
+            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.TCP(sport= src_port, dport=target_port, flags="S"), verbose=False, timeout=timeout)
 
             if response != None:
                 if response.haslayer(scapy.TCP):
@@ -122,7 +137,7 @@ def _targetPortScan(target_ip, target_ports, method):
         for target_port in target_ports:
             port_status = "unknow"
 
-            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.UDP(dport=target_port), verbose=False, timeout=5)
+            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.UDP(dport=target_port), verbose=False, timeout=timeout)
 
             if response == None:
                 port_status = "unknow"
@@ -145,7 +160,7 @@ def _targetPortScan(target_ip, target_ports, method):
             src_port = scapy.RandShort()
             port_status = "mute"
 
-            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.TCP(sport= src_port, dport=target_port, flags="FPU"), verbose=False, timeout=5)
+            response = scapy.sr1(scapy.IP(dst=target_ip)/scapy.TCP(sport= src_port, dport=target_port, flags="FPU"), verbose=False, timeout=timeout)
             
             if response != None:
                 if response.haslayer(scapy.TCP):
@@ -183,7 +198,7 @@ def softScan(target_subnet):
 
     print(">> PCS SoftScan in progress . . .\n")
     scan_result = _targetIPScan(target_subnet)
-    
+
     for item in scan_result:
         print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
 
@@ -210,16 +225,29 @@ def advancedScan(target_subnet):
 
         print("----")
 
-    print("END")
 
+def customScan(target_subnet, target_ports=[], method="syn", timeout=1):
+    '''A function to scan IP of a subnet via ARP.
+    This scan detects IP, MAC addresses and common TCP port status within a subnet.
 
-def customScan():
-    # TODO Func customScan
-    # Read target subnet
-    # Scan IP
-    # Scan specific PORTS
-    # Print scan result
-    pass
+    Params:
+        target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+    '''
+
+    print(">> PCS CustomScan in progress . . .\n")
+    scan_result = _targetIPScan(target_subnet)
+    
+    for item in scan_result:
+        print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
+
+        scanned_ports = _targetPortScan(item["IP"], target_ports, method)
+
+        for port in scanned_ports:
+            if port[1] != "closed":
+                print("Port {} is {}".format(port[0], port[1]))
+
+        print("----")
+
 
 def standardScanStealth():
     # TODO Func stealthScan
