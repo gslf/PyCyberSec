@@ -1,0 +1,40 @@
+Port;Name;Comment
+7;echo;Echo service
+20;ftp-data;FTP data port
+21;ftp;File Transfer Protocol (FTP) port; sometimes used by File Service Protocol (FSP)
+22;ssh;Secure Shell (SSH) service
+23;telnet;The Telnet service
+25;smtp;Simple Mail Transfer Protocol (SMTP)
+37;time;Time Protocol
+42;nameserver;Internet Name Service
+43;nicname;WHOIS directory service
+53;domain;domain name services (such as BIND)
+63;whois++;WHOIS++, extended WHOIS services
+69;tftp;Trivial File Transfer Protocol (TFTP)
+80;http;HyperText Transfer Protocol (HTTP) for World Wide Web (WWW) services
+88;kerberos;Kerberos network authentication system
+109;pop2;Post Office Protocol version 2
+110;pop3;Post Office Protocol version 3
+115;sftp;Secure File Transfer Protocol (SFTP) services
+143;imap;Internet Message Access Protocol (IMAP)
+161;snmp;Simple Network Management Protocol (SNMP)
+220;imap3;Internet Message Access Protocol version 3
+443;https;Secure Hypertext Transfer Protocol (HTTP)
+546;dhcpv6-client;Dynamic Host Configuration Protocol (DHCP) version 6 client
+547;dhcpv6-server;Dynamic Host Configuration Protocol (DHCP) version 6 Service
+554;rtsp;Real Time Stream Control Protocol (RTSP)
+992;telnets;Telnet over Secure Sockets Layer (TelnetS)
+993;imaps;Internet Message Access Protocol over Secure Sockets Layer (IMAPS)
+994;ircs;Internet Relay Chat over Secure Sockets Layer (IRCS)
+995;pop3s;Post Office Protocol version 3 over Secure Sockets Layer (POP3S)
+1433;ms-sql-s;Microsoft SQL Server
+1434;ms-sql-m;Microsoft SQL Monitor
+1812;radius;Radius dial-up authentication and accounting services
+1813;radius-acct;Radius Accounting
+1997;gdp-port;Cisco Gateway Discovery Protocol (GDP)
+33434;traceroute;Traceroute network tracking tool
+465;smtps;Simple Mail Transfer Protocol over Secure Sockets Layer (SMTPS)
+5432;postgres;PostgreSQL database
+8008;http-alt;Hypertext Tranfer Protocol (HTTP) alternate
+8080;webcache;World Wide Web (WWW) caching service
+8081;tproxy;Transparent Proxy

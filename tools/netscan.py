@@ -35,7 +35,13 @@ def netscan():
         # Launch PCS AdvancedScan
         elif choice == "2":
             target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
-            advancedScan(target)
+            list_flag_string = input("1. for light port list (default - faster) or 2. for full port list (slower): ")
+            if list_flag_string == "2":
+                list_flag = True
+            else:
+                list_flag = False
+
+            advancedScan(target, list_flag)
             input("Press any key to continue . . .")
 
         # Launch PCS CustomScan
@@ -202,17 +208,18 @@ def softScan(target_subnet):
     for item in scan_result:
         print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
 
-def advancedScan(target_subnet):
+def advancedScan(target_subnet, full_port_list = False):
     '''A function to scan IP of a subnet via ARP.
     This scan detects IP, MAC addresses and common TCP port status within a subnet.
 
     Params:
         target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+        full_port_list (boolean) - Flag to choice full/light port list
     '''
 
     print(">> PCS AdvancedScan in progress . . .\n")
     scan_result = _targetIPScan(target_subnet)
-    standard_ports_list = standardPorts()
+    standard_ports_list = standardPorts(full_port_list)
     
     for item in scan_result:
         print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
@@ -247,23 +254,6 @@ def customScan(target_subnet, target_ports=[], method="syn", timeout=1):
                 print("Port {} is {}".format(port[0], port[1]))
 
         print("----")
-
-
-def standardScanStealth():
-    # TODO Func stealthScan
-    # Read target subnet
-    # Scan IP
-    # Scan standard PORTS in Stealth mode
-    # Print scan result
-    pass
-
-def advancedScanStealth():
-    # TODO Func stealthFullScan
-    # Read target subnet
-    # Scan IP
-    # Scan ALL PORTS in Stealth mode
-    # Print scan result
-    pass
 
 
 

@@ -13,15 +13,22 @@ def clear():
     else: 
         _ = system('clear')
 
-def standardPorts():
+def standardPorts(full_version = False):
     '''Return an array with standard TCP and UPD ports
+
+    Params
+        full_version (boolean) - Full list flag
 
     Return:
         ports (Array of int)
     '''
     
     # CSV LIST PATH
-    WELL_KNOW_PORTS_LIST = "WellKnownPorts.csv"
+    if full_version:
+        WELL_KNOW_PORTS_LIST = "WellKnownPortsFULL.csv"
+    else:
+        WELL_KNOW_PORTS_LIST = "WellKnownPortsLIGHT.csv"
+        
     common_ports = []
 
     with open(WELL_KNOW_PORTS_LIST, mode='r') as csv_file:
