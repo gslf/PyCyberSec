@@ -2,6 +2,7 @@ import time
 
 from utils import clear
 from testing.test_netscan import test_netscan
+from testing.test_smartGenerator import test_SmartGenerator
 
 def launcher():
     '''Test launcher Menu loop
@@ -17,6 +18,7 @@ def launcher():
         print("PCS test launcher")
         print("")
         print("1 > Test PCS NetScan")
+        print("2 > Test PCS SmartGenerator")
         print("0 > EXIT")
         print("")
         print("######################")
@@ -24,9 +26,13 @@ def launcher():
 
         choice = input("Your choice: ")
 
-        # Launch PCS netscan
+        # Launch PCS NetScan test
         if choice == "1":
             test_netscan()
+
+         # Launch PCS SmartGenerator test
+        if choice == "1":
+            test_SmartGenerator()
 
         # Exit
         elif choice == "0":

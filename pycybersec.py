@@ -2,6 +2,7 @@ import time
 
 from utils import clear
 from tools.netscan import netscan
+from tools.smartGenerator import smartGenerator
 
 
 def launcher():
@@ -17,7 +18,8 @@ def launcher():
         print("")
         print("PCS Suite - PyCyberSec")
         print("")
-        print("1 > PCS NetScan")
+        print("1 > NetScan")
+        print("2 > SmartGenerator")
         print("0 > EXIT")
         print("")
         print("######################")
@@ -25,9 +27,13 @@ def launcher():
 
         choice = input("Your choice: ")
 
-        # Launch PCS netscan
+        # Launch PCS NetScan
         if choice == "1":
             netscan()
+
+        # Launch PCS SmartGenerator
+        if choice == "2":
+            smartGenerator()
 
         # Exit
         elif choice == "0":
