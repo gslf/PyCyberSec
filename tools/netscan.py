@@ -1,7 +1,7 @@
 import time
 import scapy.all as scapy
 
-from utils import clear, standardPorts
+from utils import clear, standardPorts, saveToFile
 
 
 def netscan():
@@ -29,8 +29,13 @@ def netscan():
         # Launch PCS SoftSCan
         if choice == "1":
             target = input("Target ip or subnet (xx.xx.xx.xx/yy): ")
-            softScan(target)
-            input("Press any key to continue . . .")
+            result = softScan(target)
+            print(result)
+
+            save_continue = input("\nPress s to save result or any other key to continue ")
+
+            if save_continue == "s" or save_continue == "S":
+                saveToFile(result)
         
         # Launch PCS AdvancedScan
         elif choice == "2":
@@ -41,8 +46,13 @@ def netscan():
             else:
                 list_flag = False
 
-            advancedScan(target, list_flag)
-            input("Press any key to continue . . .")
+            result = advancedScan(target, list_flag)
+            print(result)
+
+            save_continue = input("\nPress s to save result or any other key to continue ")
+
+            if save_continue == "s" or save_continue == "S":
+                saveToFile(result)
 
         # Launch PCS CustomScan
         elif choice == "3":
@@ -52,7 +62,15 @@ def netscan():
                 ports = list(map(int,ports_string.split()))
                 method = input("Method (\"syn\" or \"udp\" or \"xmas\"): ")
                 timeout = input("Timeout of port scan (seconds): ")
-                customScan(target, ports, method, float(timeout))
+                result = customScan(target, ports, method, float(timeout))
+
+                print(result)
+
+                save_continue = input("\nPress s to save result or any other key to continue ")
+
+                if save_continue == "s" or save_continue == "S":
+                    saveToFile(result)
+
             except Exception as e:
                 print("SCAN ERROR: {}".format(e))
             
@@ -204,9 +222,11 @@ def softScan(target_subnet):
 
     print(">> PCS SoftScan in progress . . .\n")
     scan_result = _targetIPScan(target_subnet)
-
+    result_string = ""
     for item in scan_result:
-        print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
+        result_string += "Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"])
+
+    return result_string
 
 def advancedScan(target_subnet, full_port_list = False):
     '''A function to scan IP of a subnet via ARP.
@@ -220,17 +240,20 @@ def advancedScan(target_subnet, full_port_list = False):
     print(">> PCS AdvancedScan in progress . . .\n")
     scan_result = _targetIPScan(target_subnet)
     standard_ports_list = standardPorts(full_port_list)
-    
+    result_string = ""
     for item in scan_result:
-        print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
+        result_string += "Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"])
 
         scanned_ports = _targetPortScan(item["IP"], standard_ports_list, "syn")
 
         for port in scanned_ports:
             if port[1] != "closed":
-                print("Port {} is {}".format(port[0], port[1]))
+                result_string += "Port {} is {}\n".format(port[0], port[1])
 
-        print("----")
+        result_string += "----\n"
+
+    return result_string
+        
 
 
 def customScan(target_subnet, target_ports=[], method="syn", timeout=1):
@@ -243,17 +266,20 @@ def customScan(target_subnet, target_ports=[], method="syn", timeout=1):
 
     print(">> PCS CustomScan in progress . . .\n")
     scan_result = _targetIPScan(target_subnet)
+    result_string = ""
     
     for item in scan_result:
-        print("Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"]))
+        result_string += "Client retrieved: \nIP: {} MAC: {}\n".format(item["IP"], item["MAC"])
 
         scanned_ports = _targetPortScan(item["IP"], target_ports, method)
 
         for port in scanned_ports:
             if port[1] != "closed":
-                print("Port {} is {}".format(port[0], port[1]))
+                result_string += "Port {} is {}\n".format(port[0], port[1])
 
-        print("----")
+        result_string += "----"
+
+    return result_string
 
 
 

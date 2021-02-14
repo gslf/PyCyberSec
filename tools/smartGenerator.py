@@ -49,10 +49,10 @@ def smartGenerator():
                     result['veichle'])
 
                 print(formatted_result)
-                save_continue = input("\nPress s to save result or any other key to continue . . .")
+                save_continue = input("\nPress s to save result or any other key to continue ")
 
                 if save_continue == "s" or save_continue == "S":
-                    saveToFile(result)
+                    saveToFile(formatted_result)
                 
             
             # Launch Fake Credit Card Number Generator
@@ -70,10 +70,10 @@ def smartGenerator():
                 )
 
                 print(formatted_result)
-                save_continue = input("\nPress s to save result or any other key to continue . . .")
+                save_continue = input("\nPress s to save result or any other key to continue ")
 
                 if save_continue == "s" or save_continue == "S":
-                    saveToFile(result)
+                    saveToFile(formatted_result)
 
             # Launch Fake Web Identity Generator
             elif choice == "3":
@@ -86,10 +86,10 @@ def smartGenerator():
                     result['content_type'])
 
                 print(formatted_result)
-                save_continue = input("\nPress s to save result or any other key to continue . . .")
+                save_continue = input("\nPress s to save result or any other key to continue ")
 
                 if save_continue == "s" or save_continue == "S":
-                    saveToFile(result)
+                    saveToFile(formatted_result)
 
             # Exit
             elif choice == "0":
