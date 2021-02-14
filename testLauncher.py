@@ -30,8 +30,8 @@ def launcher():
         if choice == "1":
             test_netscan()
 
-         # Launch PCS SmartGenerator test
-        if choice == "1":
+        # Launch PCS SmartGenerator test
+        if choice == "2":
             test_SmartGenerator()
 
         # Exit

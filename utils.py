@@ -1,4 +1,4 @@
-import csv
+import csv, json
 from os import system, name 
 
 def clear(): 
@@ -41,3 +41,10 @@ def standardPorts(full_version = False):
                 common_ports.append(int(row["Port"]))
                 
     return common_ports
+
+
+def saveToFile(data):
+    filename = input("File name: ")
+    with open(filename, 'w') as f:
+        json.dump(data, f)
+        print("Result saved on {}\n".format(filename))
