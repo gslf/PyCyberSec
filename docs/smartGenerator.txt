@@ -1,0 +1,38 @@
+Help on module smartGenerator:
+
+NAME
+    smartGenerator
+
+FUNCTIONS
+    genBankInfo(locale='en-US')
+        Generate bank information
+        
+        Params: 
+            locale (string) -  e.g. en-US (optional)
+        
+        Return:
+            datas {dict} - iban, swift, cc, cc_expire, cc_sec_code
+    
+    genFakePerson(locale='en-US', sex=None)
+        Generate a fake profile
+        
+        Params: 
+            locale (string) -  e.g. en-US (optional)
+            sex (string) - "M" or "F" (optional)
+        
+        Return:
+            datas {dict}
+    
+    genWebIdentity()
+        Generate a fake web identity
+        
+        Return:
+            datas {dict} - ssid, content_type, server_token
+    
+    smartGenerator()
+        This function is the main SmartGenerator loop
+
+FILE
+    /Users/gioeleslfierro/Dev/PyCyberSec/tools/smartGenerator.py
+
+

@@ -1,0 +1,35 @@
+Help on module netscan:
+
+NAME
+    netscan
+
+FUNCTIONS
+    advancedScan(target_subnet, full_port_list=False)
+        A function to scan IP of a subnet via ARP.
+        This scan detects IP, MAC addresses and common TCP port status within a subnet.
+        
+        Params:
+            target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+            full_port_list (boolean) - Flag to choice full/light port list
+    
+    customScan(target_subnet, target_ports=[], method='syn', timeout=1)
+        A function to scan IP of a subnet via ARP.
+        This scan detects IP, MAC addresses and common TCP port status within a subnet.
+        
+        Params:
+            target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+    
+    netscan()
+        This function is the main netscan loop
+    
+    softScan(target_subnet)
+        A function to scan IP of a subnet via ARP.
+        This scan only detects IP and MAC addresses within a subnet.
+        
+        Params:
+            target_subnet (string) - Subnet string "xx.xx.xx.xx./yy"
+
+FILE
+    /Users/gioeleslfierro/Dev/PyCyberSec/tools/netscan.py
+
+
